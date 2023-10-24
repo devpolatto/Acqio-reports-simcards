@@ -2,7 +2,6 @@ import argparse
 
 from PathTools import PathTools
 
-
 def main():
 
      parser = argparse.ArgumentParser(description='Passagem de argumento para a execução do script')
@@ -11,9 +10,11 @@ def main():
 
      pathTools = PathTools()
 
-     absolutePath = pathTools.getAbsolutePath(args.path)
-     print(absolutePath)
-
+     try: 
+          absolutePath = pathTools.getAbsolutePath(args.path)
+          print(absolutePath)
+     except Exception as error:
+          print('Deu falha -> ', error)
 
 if __name__ == '__main__':
      main()
