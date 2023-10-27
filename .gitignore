@@ -1,5 +1,8 @@
 # created by virtualenv automatically
 bin
 lib
-__pycache__
-.pytest_cache/
+share/
+
+**/__pycache__/
+**/pytest_cache/
+**/.pytest_cache/
