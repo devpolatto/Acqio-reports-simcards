@@ -1,4 +1,5 @@
 import argparse
+import pandas as pd
 
 from modules.PathTools import PathTools
 
@@ -11,7 +12,6 @@ def main():
      args = parser.parse_args()
 
      pathTools = PathTools()
-     pathToFiles: str = ''
 
      try: 
           pathToFiles = pathTools.getAbsolutePath(args.path)
@@ -19,11 +19,35 @@ def main():
           print('Deu falha -> ', error)
 
 
-     df = mergerFiles(pathToFiles, ',', '.csv')
+     df = mergerFiles(pathToFiles, ',', '.csv') # return the dataFrame
 
-     print(df['metric.ICCID'])
+     df = df.drop_duplicates(subset='metric.ICCID', keep='first') # Remove data duplicates
 
-     
+     df['metric.ICCID'] = df['metric.ICCID'].astype(str) # Convert metric.ICCID column form Dtype object to str
+
+     df['@timestamp'] = pd.to_datetime(df['@timestamp'], format='%b %d, %Y @ %H:%M:%S.%f') # converte pro formato datetime
+
+     df['@timestamp_formatted'] = df['@timestamp'].dt.strftime('%d/%m/%Y')
+
+     move_to_position = 1
+     column = df['@timestamp_formatted']
+     columnData = 'Data'
+
+     if columnData in df.columns:
+          df.insert(move_to_position, 'Data', column)
+
+     df.insert(move_to_position, 'Data', column)
+     df.drop('@timestamp', axis=1, inplace=True)
+     df.drop('@timestamp_formatted', axis=1, inplace=True)
+
+     # df.to_csv(f'{pathToFiles}/newMergedFile.csv', index=False)
+     df.to_excel(f'{pathToFiles}/newMergedFile.xlsx', index=False)
+     print(df.head())
+     print(df.info())
+
+
+__version__="0.0.1"
 
 if __name__ == '__main__':
      main()
+
