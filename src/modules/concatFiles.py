@@ -1,13 +1,7 @@
 import pandas as pd
 import os
 
-from PathTools import PathTools
-
-def mergerFiles(pathDir: str, extension: str, delimiter: str, verbose=False):
-
-     pathTools = PathTools()
-
-     pathDir = pathTools.getAbsolutePath(pathDir)
+def mergerFiles(pathDir: str, delimiter: str, extension: str = '.csv', verbose=False):
 
      dataFiles = [f for f in os.listdir(pathDir) if f.endswith('.csv')]
 

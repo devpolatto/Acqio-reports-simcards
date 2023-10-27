@@ -22,7 +22,7 @@ class PathTools():
           if self.__validate_path(pathComplet):
                return pathComplet
           else:
-               raise ValueError('Directory not found on file system')
+               raise ValueError(f'Directory not found on file system; {type(pathComplet)} : {pathComplet}')
 
           
 
