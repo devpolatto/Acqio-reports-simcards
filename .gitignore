@@ -3,6 +3,9 @@ bin
 lib
 share/
 
+# Virtualenv
+.venv
+
 **/__pycache__/
 **/pytest_cache/
 **/.pytest_cache/
